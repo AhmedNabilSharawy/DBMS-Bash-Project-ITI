@@ -7,8 +7,8 @@ Description : List all tables in the database
 '
 
 # This vars needed when test file without table-menu
-dbName="test"  
-dbLocation="../../Databases/$dbName"
+#dbName="test"  
+#dbLocation="../../Databases/$dbName"
 
 shopt -s extglob
 export LC_COLLATE=C
@@ -43,4 +43,4 @@ listTables(){
     done
     echo "+--------------------------------+"
 }
-listTables
+#listTables

@@ -31,7 +31,7 @@ while true; do
     select choice in "${tableMenuOptions[@]}"
     do
         case $REPLY in
-            1) listTables ;;
+            1) listTables; read ;;
             2) createNewTable ;;
             3) dropTable ;;
             4) selectFromTable ;;
