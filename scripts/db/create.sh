@@ -2,6 +2,7 @@
 
 : '
 Author : Ahmed Nabil
+Date : 04-02-2023
 Description: Create Database based on user input
 
 Test Cases covered:
@@ -30,19 +31,8 @@ read -p "Enter Database Name: " DbName
         clear #formating
 
         echo "$DbName Already Exists"
-        select choice in "Continue" "Back to Main Menu" "Exit"
-            do
-                case $REPLY in 
-                1) clear #formating 
-                    break;;
-                2) clear #formating 
-                    . ./main-menu.sh
-                    break ;;
-                3) echo "Good Bye"
-                   exit ;;
-                *) echo "You have Entered Wrong Number" ;;
-                esac
-            done
+        #Display menu to user
+        askMenu
     else
         if [[ $DbName =~ ^[a-zA-Z]+_{0,1}[a-zA-Z]+$ && -n $DbName ]]; then
             mkdir ./Databases/$DbName
@@ -50,37 +40,14 @@ read -p "Enter Database Name: " DbName
             clear #formating 
 
             echo "$DbName Created successfully"
-            PS3="Choose Number From Menu PLease: "
-            select choice in "Back to Main Menu" "Exit"
-                do
-                    case $REPLY in 
-                    1) clear #formating 
-                       . ./main-menu.sh
-                       break ;;
-                    2) clear #formating 
-                       echo "Good Bye, Have a nice Day!"
-                       exit ;;
-                    *) echo "You have Entered Wrong Number" ;;
-                    esac
-            done
-            break #break while loop
+            
+            #Display menu to user
+            askMenu
         else
             clear #formating 
             echo "Database Name invalid"
-            select choice in "Continue" "Back to Main Menu" "Exit"
-            do
-                case $REPLY in 
-                1) clear #formating 
-                    break;;
-                2) clear #formating 
-                    . ./main-menu.sh
-                    break ;;
-                3) clear #formating 
-                   echo "Good Bye, Have a nice Day!"
-                   exit ;;
-                *) echo "You have Entered Wrong Number" ;;
-                esac
-            done 
+            #Display menu to user
+            askMenu
         fi
     fi
 done
