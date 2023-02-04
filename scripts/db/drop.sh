@@ -1,8 +1,13 @@
 #!/bin/bash
+: '
+Author : Ahmed Nabil
+Description: Drop Database based on user input
 
-#Author : Ahmed Nabil
-#Description: Drop Database based on user input
-
+Test Cases covered:
+1- Check user input of Database is existed.
+2- Empty input is handeled.
+3- User input within Range of select.
+'
 shopt -s extglob
 export LC_COLLATE=C
 
@@ -10,27 +15,42 @@ export LC_COLLATE=C
 while [ true ]; do
     read -p "Enter Database Name: " DbName
     # -n $DbName checks that input is not empty because if enter was pressed all database will be deleted
-    if [[ -d ~/DBMS-Bash-Project-ITI/Databases/"$DbName" && -n $DbName ]]; then
-        rm -r  ~/DBMS-Bash-Project-ITI/Databases/$DbName 
-        clear
-        echo "Database $DbName removed successfully"
+    if [[ -d ./Databases/"$DbName" && -n $DbName ]]; then
+        rm -r ./Databases/$DbName 
 
+        clear #formating 
+
+        echo "Database $DbName removed successfully"
         PS3="Choose Number From Menu PLease: "
         select choice in "Back to Main Menu" "Exit"
             do
-                if [[ $REPLY =~ ^[1-2]+$ ]] ;then
-                    case $REPLY in 
-                        1) clear
-                            . ~/DBMS-Bash-Project-ITI/main-menu.sh
-                            break ;;
-                        2) exit ;;
-                    esac
-                else
-                    echo "You have Entered Wrong Number"
-                fi
+                case $REPLY in 
+                    1) clear #formating 
+                       . ./main-menu.sh
+                       break ;;
+                    2) clear #formating 
+                       echo "Good Bye, Have a nice Day!"
+                       exit ;;
+                    *) echo "You have Entered Wrong Number"
+                esac
             done
             break
     else
+        clear #formating 
         echo "Database Doesn't Exist"
+        select choice in "Continue" "Back to Main Menu" "Exit"
+            do
+                case $REPLY in 
+                1) clear #formating 
+                    break;;
+                2) clear #formating 
+                    . ./main-menu.sh
+                    break ;;
+                3) clear #formating 
+                   echo "Good Bye, Have a nice Day!"
+                   exit ;;
+                *) echo "You have Entered Wrong Number" ;;
+                esac
+            done
     fi
 done
