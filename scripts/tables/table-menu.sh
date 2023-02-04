@@ -31,9 +31,9 @@ while true; do
     select choice in "${tableMenuOptions[@]}"
     do
         case $REPLY in
-            1) listTables; read ;;
-            2) createNewTable ;;
-            3) dropTable ;;
+            1) listTables; read ;; #Done
+            2) createNewTable ;; #Done
+            3) dropTable ;; #Done
             4) selectFromTable ;;
             5) echo "insert into table" ;;
             6) echo "update table" ;;
