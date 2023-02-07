@@ -5,30 +5,27 @@ Date : 04-02-2023
 Description: Display Database based on user input
 
 Test Cases covered:
-1- Check user input of Database is existed.
-2- Empty input is handeled.
-3- User input within Range of select.
+1- Check Database is empty or not.
 '
 
 shopt -s extglob
 export LC_COLLATE=C
 
-#check Database Entered exists
-while [ true ]; do
-    read -p "Enter Database Name: " DbName
     # -n $DbName checks that input is not empty 
-    if [[ -d ./Databases/"$DbName" && -n $DbName ]]; then
+    if [[ "$(ls ./Databases)" ]]; then
     
         clear #formating
 
-        ls ./Databases/$DbName 
+        ls ./Databases
+        echo #formating new line
 
         #Display menu to user
-        askMenu
+        askMenuWithoutCont
     else
         clear #formating 
-        echo "Database Doesn't Exist"
+        echo "Database is empty"
+        echo #formating new line
         #Display menu to user
-        askMenu
+        askMenuWithoutCont
     fi
 done

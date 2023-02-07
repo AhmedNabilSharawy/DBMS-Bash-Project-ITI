@@ -31,6 +31,7 @@ read -p "Enter Database Name: " DbName
         clear #formating
 
         echo "$DbName Already Exists"
+        echo #formating new line
         #Display menu to user
         askMenu
     else
@@ -40,12 +41,14 @@ read -p "Enter Database Name: " DbName
             clear #formating 
 
             echo "$DbName Created successfully"
+            echo #formating new line
             
             #Display menu to user
             askMenu
         else
             clear #formating 
             echo "Database Name invalid"
+            echo #formating new line
             #Display menu to user
             askMenu
         fi

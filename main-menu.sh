@@ -10,7 +10,7 @@ Test Cases covered:
 shopt -s extglob
 export LC_COLLATE=C
 
-askMenu(){
+askMenuWithCont(){
     PS3="Choose Number From Menu PLease: "
     select choice in "Continue" "Back to Main Menu" "Exit"
             do
@@ -21,6 +21,21 @@ askMenu(){
                     . ./main-menu.sh
                     break ;;
                 3) clear #formating 
+                   echo "Good Bye, Have a nice Day!"
+                   exit ;;
+                *) echo "You have Entered Wrong Number" ;;
+                esac
+            done
+}
+
+askMenuWithoutCont(){
+    select choice in "Back to Main Menu" "Exit"
+            do
+                case $REPLY in 
+                1) clear #formating 
+                    . ./main-menu.sh
+                    break ;;
+                2) clear #formating 
                    echo "Good Bye, Have a nice Day!"
                    exit ;;
                 *) echo "You have Entered Wrong Number" ;;
