@@ -36,7 +36,7 @@ while true; do
             3) dropTable ;; #Done
             4) selectFromTable ;;
             5) echo "insert into table" ;;
-            6) echo "update table" ;;
+            6) updateFromTable; break;;
             7) deleteFromTable; break;;
             8) echo "back to main menu" ;;
             9) echo "exit from script" ;;
