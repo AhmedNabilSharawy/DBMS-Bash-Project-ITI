@@ -38,8 +38,8 @@ while true; do
             2) createNewTable ;; #Done
             3) dropTable ;; #Done
             4) selectFromTable ;;
-            5) insertData ;;
-            6) echo "update table" ;;
+            5) echo "insert into table" ;;
+            6) updateFromTable; break;;
             7) deleteFromTable; break;;
             8) echo "back to main menu" ;;
             9) echo "exit from script"; sleep 1; exit 0 ;;
