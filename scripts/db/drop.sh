@@ -22,11 +22,13 @@ while [ true ]; do
         clear #formating 
 
         echo "Database $DbName removed successfully"
+        echo #formating new line
         #Display menu to user
         askMenu
     else
         clear #formating 
         echo "Database Doesn't Exist"
+        echo #formating new line
         #Display menu to user
         askMenu
     fi
