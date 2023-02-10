@@ -17,6 +17,9 @@ source ./select.sh
 # import deleteFromTable function from tables/delete.sh script
 source ./delete.sh
 
+# import insertData function from tables/delete.sh script
+source ./insert.sh
+
 # import printTableInfo function from tables/printTableInfo scripts
 source ./print-table.sh
 
@@ -39,7 +42,7 @@ while true; do
             6) updateFromTable; break;;
             7) deleteFromTable; break;;
             8) echo "back to main menu" ;;
-            9) echo "exit from script" ;;
+            9) echo "exit from script"; sleep 1; exit 0 ;;
             *) echo "wrong choice: Please try again";
         esac
         break

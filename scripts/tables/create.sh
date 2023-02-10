@@ -8,7 +8,7 @@ Description : Create new table and information about columns and its datatypes
 Test Cases:
 1- enter invalid table name [Done]
 2- enter existing table name [Done]
-3- enter alpha in columns number [Done]
+3- enter calpha in olumns number [Done]
 4- enter invaild column data type [Done]
 5- enter invalid column name
 6- enter invalid data and make sure that table file created if all input is valid [Done]
@@ -29,6 +29,7 @@ getTableinfo(){
     columnDataType=""
     echo -e "\nEnter the number of column in $tableName"
     read -p "---> " columnsNo
+    # ---------------------> change * in regex  <---------------------
     if [[ $columnsNo =~ ^[0-9]*$ && ( $columnsNo -gt 0 && $columnsNo -le 10 ) ]]
     then
         typeset -i i=1

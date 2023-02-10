@@ -20,7 +20,6 @@ tableMetaFile=""
 chooseTable(){
     # while loop to keep printing menu in the case of error happened 
     while true; do
-        echo "Select table that you want to get data from"
         PS3="---> "
         select choice in $tables
         do
@@ -91,11 +90,12 @@ conditions(){
 
 selectFromTable(){
     # Menu to let user select specific table from list of tables in database
+    echo "Select table that you want to get data from"
     chooseTable
     # Menu to let user choose which columns to display
     chooseColumns
     # Menu to let user select based on conditions
-    conditions
+    
 
     c="${selected[@]}"
     awk -F: -v c="$c" '
@@ -108,6 +108,7 @@ selectFromTable(){
                 printf "\n";
         }
         ' $dbLocation/$tableName
+        read
 }
 #selectFromTable
 
