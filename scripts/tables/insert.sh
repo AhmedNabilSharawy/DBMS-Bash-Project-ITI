@@ -47,6 +47,7 @@ insertData(){
         column=$column+1
     done
     echo $row >> $dbLocation/$tableName
-    echo -e "\nThe row was inserted successfully with ID = $ID"
+    echo -e "\nThe row was inserted successfully with ID = $ID\n"
+    read -p "Press any key to continue..."
 }
 #insertData
