@@ -21,7 +21,7 @@ updateFromTable(){
     # get condition used to update from user
     updatedColumn=($(cut -f1 -d: $dbLocation/.meta-$tableName))
     updatedLength=${#updatedColumn[@]}
-
+    
     # choose updated column from user
     while true; do
         clear # formating
