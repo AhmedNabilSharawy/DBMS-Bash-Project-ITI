@@ -23,6 +23,9 @@ source ./insert.sh
 # import printTableInfo function from tables/printTableInfo scripts
 source ./print-table.sh
 
+# import updateFromTable function from tables/printTableInfo scripts
+source ./update.sh
+
 dbName="test"
 dbLocation="../../Databases/$dbName"
 

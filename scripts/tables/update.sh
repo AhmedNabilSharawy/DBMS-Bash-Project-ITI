@@ -19,9 +19,10 @@ updateFromTable(){
     chooseTable
 
     # get condition used to update from user
-    updatedColumn=($(cut -f1 -d: $dbLocation/.meta-$tableName))
+    # tail used to eliminate pk from update menu 
+    updatedColumn=($(cut -f1 -d: $dbLocation/.meta-$tableName | tail +2))
     updatedLength=${#updatedColumn[@]}
-    
+
     # choose updated column from user
     while true; do
         clear # formating
@@ -30,7 +31,7 @@ updateFromTable(){
         do
             if [[ $REPLY -ge 1 && $REPLY -le $updatedLength ]];then
                 # get selected column datatype
-                updatedColNum=$REPLY
+                updatedColNum=$(($REPLY+1))
                 dataType=$(awk -F: -v colName=$choice '{if ($1==colName) print $2}' $dbLocation/.meta-$tableName)
                 break 2
             else
@@ -77,7 +78,7 @@ updateFromTable(){
         do
             if [[ $REPLY -ge 1 && $REPLY -le $updatedLength ]]
                 then
-                    columnNum=$REPLY
+                    columnNum=$(($REPLY+1))
                     columnName=$choice
                     clear # formating
                     echo "Your answer saved Successfully "
@@ -92,7 +93,7 @@ updateFromTable(){
     done
 
     # take input from user to select row by it based on filtered column
-    read -p "Enter value in $columnName to select row by it: " selectValue
+        read -p "Enter value in $columnName to select row by it: " selectValue
 
     # update statement
     updateNumber=$(awk -F: -v updateColNum=$updatedColNum -v newVal=$newValue -v filtrColNum=$columnNum -v selectVal=$selectValue 'BEGIN{OFS=":";} {if ($filtrColNum==selectVal) print $0}' $dbLocation/$tableName | wc -l )
