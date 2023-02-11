@@ -3,52 +3,49 @@
 #SCRIPTPATH=`dirname "$0"` ---> will be needed in integration with the database files
 
 # import listTables function from /tables/list.sh script
-source ./list.sh
+source ./scripts/tables/list.sh
 
 # import createNewTable function from /tables/create.sh script
-source ./create.sh
+source ./scripts/tables/create.sh
 
 # import dropTable function from /tables/drop.sh script
-source ./drop.sh
+source ./scripts/tables/drop.sh
 
 # import Select function from /tables/select.sh script
-source ./select.sh
+source ./scripts/tables/select.sh
 
 # import deleteFromTable function from tables/delete.sh script
-source ./delete.sh
+source ./scripts/tables/delete.sh
 
 # import insertData function from tables/delete.sh script
-source ./insert.sh
+source ./scripts/tables/insert.sh
 
 # import printTableInfo function from tables/printTableInfo scripts
-source ./print-table.sh
+source ./scripts/tables/print-table.sh
 
 # import updateFromTable function from tables/printTableInfo scripts
-source ./update.sh
+source ./scripts/tables/update.sh
 
-dbName="test"
-dbLocation="../../Databases/$dbName"
-
-tableMenuOptions=( "List Tables" "Create Table" "Drop Table" "Select from Table" "Insert into Table" "Update Table" "Delete from Table" "Back to Main Menu" "Exit" )
-
-PS3="---> "
-while true; do
-    clear
-    select choice in "${tableMenuOptions[@]}"
-    do
-        case $REPLY in
-            1) listTables; read ;; #Done
+tableMenu(){
+    local dbName=$1
+    local dbLocation="Databases/$dbName"
+    tableMenuOptions=( "List Tables" "Create Table" "Drop Table" "Select from Table" "Insert into Table" "Update Table" "Delete from Table" "Back to Main Menu" "Exit" )
+    while true; do
+        clear
+        customMenu "      Connected to $dbName  " 0 "${tableMenuOptions[@]}"
+        local choice=$?
+        case $choice in
+            1) listTables ;; #Done
             2) createNewTable ;; #Done
-            3) dropTable ;; #Done
+            3) dropTable ;; #in progress
             4) selectFromTable ;;
-            5) echo "insert into table" ;;
+            5) insertData ;;
             6) updateFromTable; break;;
             7) deleteFromTable; break;;
-            8) echo "back to main menu" ;;
-            9) echo "exit from script"; sleep 1; exit 0 ;;
-            *) echo "wrong choice: Please try again";
+            8) break ;;
+            9) exit 0 ;;
+            *) echo -e "\nError: The value must be between (1, ${#tableMenuOptions[*]})\n";
         esac
-        break
+        read -p "Press any key to continue..."
     done
-    read -p "Press any key to continue..."
-done
+}

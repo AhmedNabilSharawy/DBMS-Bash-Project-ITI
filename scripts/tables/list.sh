@@ -17,7 +17,7 @@ listTables(){
     tables=$(ls $dbLocation)
     
     echo "+--------------------------------+"
-    echo "|           Table Name           |"
+    echo "|          Table Names           |"
     for i in $(ls $dbLocation)
     do
         echo "+--------------------------------+"

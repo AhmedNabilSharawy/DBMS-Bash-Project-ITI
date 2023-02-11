@@ -14,31 +14,36 @@ export LC_COLLATE=C
 
 #check Database Entered exists
 dropDB(){
-    local dbs=($(ls ./Databases))
-    local dbsLength=${#dbs[*]}
-    local msg="\nDatabases is empty\n"
-    local dbName=""
-    [ $dbsLength -eq 0 ] && echo -e $msg && return
+    # local dbs=($(ls ./Databases))
+    # local dbsLength=${#dbs[*]}
+    # local msg="\nDatabases is empty\n"
+    # local dbName=""
+    # [ $dbsLength -eq 0 ] && echo -e $msg && return
     
-    while [ true ]; do
-        customMenu "Choose Database that you want to drop" 0 ${dbs[*]} "Back to Main-Menu" "Exit"
-        # store the returned value form customMenu function which contain database
-        local db=$?
-        if [[ $db -gt 0 && $db -le $dbsLength ]]
-        then
-            dbName="${dbs[$(($db-1))]}"
-            break
-        elif [ $db -eq $(($dbsLength+1)) ]
-        then
-            return
-        elif [ $db -eq $(($dbsLength+2)) ]
-        then
-            exit 0
-        else
-            echo -e "\nError: The value must be between (1, $(($dbsLength+2)))\n"
-        fi
-    done
-        
+    # while [ true ]; do
+    #     customMenu "Choose Database that you want to drop" 0 ${dbs[*]} "Back to Main-Menu" "Exit"
+    #     # store the returned value form customMenu function which contain database
+    #     local db=$?
+    #     if [[ $db -gt 0 && $db -le $dbsLength ]]
+    #     then
+    #         dbName="${dbs[$(($db-1))]}"
+    #         break
+    #     elif [ $db -eq $(($dbsLength+1)) ]
+    #     then
+    #         return
+    #     elif [ $db -eq $(($dbsLength+2)) ]
+    #     then
+    #         exit 0
+    #     else
+    #         echo -e "\nError: The value must be between (1, $(($dbsLength+2)))\n"
+    #     fi
+    # done
+    local dbName=""
+    getDB "Choose Database that you want to drop"
+    
+    # exit from function if getDB returned 2
+    [ $? -eq 2 ] && return
+
     if [[ -d ./Databases/$dbName ]]; then
         rm -r ./Databases/$dbName 
         msg="Database $dbName removed successfully"

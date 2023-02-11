@@ -17,16 +17,9 @@ Test Cases:
 shopt -s extglob
 export LC_COLLATE=C
 
-# This vars needed when test file without table-menu
-#dbName="test"  
-#dbLocation="../../Databases/$dbName"
-
-tableName=""
-tableMetaFile=""
-
 getTableinfo(){
-    columnsNo=""
-    columnDataType=""
+    local columnsNo=""
+    local columnDataType=""
     echo -e "\nEnter the number of column in $tableName"
     read -p "---> " columnsNo
     # ---------------------> change * in regex  <---------------------
@@ -49,8 +42,7 @@ getTableinfo(){
                     esac
                 done
             else
-                echo -e "\nError: Column names must contain only A to Z, 0 to 9, and underscore (_) characters and not start with numbers."
-                sleep 2
+                echo -e "\nError: Column names must contain only A to Z, 0 to 9, and underscore (_) characters and not start with numbers.\n"
                 continue
             fi
             # save meta data of each column in the following order
@@ -67,15 +59,16 @@ getTableinfo(){
             let i=$i+1
         done
         echo -e "\n{$tableName} table created successfully inside {$dbName} database\n"
-        sleep 3
     else
-        echo -e "\nError: the number of columns must be in range(1, 10)"
-        sleep 2
+        echo -e "\nError: the number of columns must be in range(1, 10)\n"
         getTableinfo
     fi
 }
 
 createNewTable(){
+    local tableName=""
+    local tableMetaFile=""
+
     echo -e "\nName of the new table\nMust start with _ or alphabets and contain no sapces or special characters"
     read -p "---> " tableName
 
@@ -85,8 +78,7 @@ createNewTable(){
         # Check the existing of the table in Database
         if [[ -f "$dbLocation/$tableName" ]]
         then
-            echo -e "\nThe {$tableName} table is already exists"
-            sleep 3
+            echo -e "\nThe {$tableName} table is already exists\n"
         else
             tableMetaFile=".meta-$tableName"
             getTableinfo

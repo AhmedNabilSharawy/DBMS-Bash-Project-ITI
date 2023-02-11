@@ -5,7 +5,7 @@ Author : Ahmed Nabil
 Date : 11-02-2023
 Description : Update data from table 
 '
-source ./select.sh # shall be removed from here
+#source ./select.sh # shall be removed from here
 
 dbName="test"
 dbLocation="../../Databases/$dbName"

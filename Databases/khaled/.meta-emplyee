@@ -1,0 +1,3 @@
+fname:string
+lname:string
+age:number

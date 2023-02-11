@@ -5,7 +5,7 @@ Author : Ahmed Nabil
 Date : 08-02-2023
 Description : Delete data from table 
 '
-source ./select.sh # shall be removed from here
+#source ./select.sh # shall be removed from here
 
 dbName="test"
 dbLocation="../../Databases/$dbName"

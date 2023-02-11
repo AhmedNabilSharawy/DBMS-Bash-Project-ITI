@@ -7,15 +7,20 @@ Description: Main Menu for DBMS
 Test Cases covered:
 1- User input within Range of select.
 '
-
 # import customMenu function from /scripts/custom-menu.sh script
 source ./scripts/custom-menu.sh
+
+# import getDB function from /scripts/db/get-db.sh script
+source ./scripts/db/get-db.sh
 
 # import dropDB function from /scripts/db/drop.sh script
 source ./scripts/db/drop.sh
 
 # import listDB function from /scripts/db/list.sh script
 source ./scripts/db/list.sh 
+
+# import connectDB function from /scripts/db/connect.sh script
+source ./scripts/db/connect.sh 
 
 shopt -s extglob
 export LC_COLLATE=C
@@ -65,8 +70,9 @@ while true; do
                 listDB
                 ;;
             3) #clear #formating 
-                . ./scripts/db/connect.sh 
-                break ;;
+                clear
+                connectDB
+                ;;
             4)
                 clear
                 dropDB
