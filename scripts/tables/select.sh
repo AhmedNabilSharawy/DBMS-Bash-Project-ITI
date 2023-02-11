@@ -127,7 +127,6 @@ selectFromTable(){
     
     echo ""
 }
-selectFromTable
 
 : '
 1- but tables in menu and select table which i want to select data from 
