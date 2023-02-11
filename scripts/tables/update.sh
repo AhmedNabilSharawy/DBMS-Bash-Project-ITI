@@ -2,7 +2,7 @@
 
 : '
 Author : Ahmed Nabil
-Date : 09-02-2023
+Date : 11-02-2023
 Description : Update data from table 
 '
 source ./select.sh # shall be removed from here
@@ -40,33 +40,6 @@ updateFromTable(){
             fi
             break
         done
-    done
-
-    # take old value to be updated from user
-    while true; do
-        clear # formating
-        read -p "Enter old value: " oldValue
-        if [[ $dataType == string ]];then
-            if [[ $oldValue =~ [a-zA-Z]+ ]]; then
-                clear # formating
-                echo "Your answer saved Successfully "
-                break 2
-            else
-                clear # formating
-                echo "Please enter value matching datatype"
-                continue
-            fi
-        else # else here refer to number datatype
-            if [[ $oldValue =~ ^[0-9]+$ ]]; then
-                clear # formating
-                echo "Your answer saved Successfully "
-                break 2
-            else
-                clear # formating
-                echo "Please enter value matching datatype"
-                continue
-            fi
-        fi
     done
 
     # take updated value from user and validate it matches datatype
@@ -119,9 +92,17 @@ updateFromTable(){
     done
 
     # take input from user to select row by it based on filtered column
-        read -p "Enter value in $columnName to select row by it: " selectValue
+    read -p "Enter value in $columnName to select row by it: " selectValue
 
     # update statement
-    awk -F: -v updateColNum=$updatedColNum -v newVal=$newValue -v filtrColNum=$columnNum -v selectVal=$selectValue 'BEGIN{OFS=":";} {if ($filtrColNum==selectVal) {$updateColNum=newVal} print $0}' $dbLocation/$tableName > tmpfile && mv tmpfile $dbLocation/$tableName
+    updateNumber=$(awk -F: -v updateColNum=$updatedColNum -v newVal=$newValue -v filtrColNum=$columnNum -v selectVal=$selectValue 'BEGIN{OFS=":";} {if ($filtrColNum==selectVal) print $0}' $dbLocation/$tableName | wc -l )
+    update=$(awk -F: -v updateColNum=$updatedColNum -v newVal=$newValue -v filtrColNum=$columnNum -v selectVal=$selectValue 'BEGIN{OFS=":";} {if ($filtrColNum==selectVal) {$updateColNum=newVal} print $0}' $dbLocation/$tableName > tmpfile && mv tmpfile $dbLocation/$tableName)
+
+    if [[ $updateNumber -gt 0 ]]; then
+        clear # formating
+        echo "$updateNumber Record Updated Successfully"
+    else
+        clear # formating
+        echo "No Records Matched"
+    fi
 }
-updateFromTable
