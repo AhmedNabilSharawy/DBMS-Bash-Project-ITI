@@ -13,23 +13,38 @@ shopt -s extglob
 export LC_COLLATE=C
 
 #check Database Entered exists
-while [ true ]; do
-    read -p "Enter Database Name: " DbName
-    # -n $DbName checks that input is not empty because if enter was pressed all database will be deleted
-    if [[ -d ./Databases/"$DbName" && -n $DbName ]]; then
-        rm -r ./Databases/$DbName 
-
-        clear #formating 
-
-        echo "Database $DbName removed successfully"
-        echo #formating new line
-        #Display menu to user
-        askMenu
+dropDB(){
+    local dbs=($(ls ./Databases))
+    local dbsLength=${#dbs[*]}
+    local msg="\nDatabases is empty\n"
+    local dbName=""
+    [ $dbsLength -eq 0 ] && echo -e $msg && return
+    
+    while [ true ]; do
+        customMenu "Choose Database that you want to drop" 0 ${dbs[*]} "Back to Main-Menu" "Exit"
+        # store the returned value form customMenu function which contain database
+        local db=$?
+        if [[ $db -gt 0 && $db -le $dbsLength ]]
+        then
+            dbName="${dbs[$(($db-1))]}"
+            break
+        elif [ $db -eq $(($dbsLength+1)) ]
+        then
+            return
+        elif [ $db -eq $(($dbsLength+2)) ]
+        then
+            exit 0
+        else
+            echo -e "\nError: The value must be between (1, $(($dbsLength+2)))\n"
+        fi
+    done
+        
+    if [[ -d ./Databases/$dbName ]]; then
+        rm -r ./Databases/$dbName 
+        msg="Database $dbName removed successfully"
     else
-        clear #formating 
-        echo "Database Doesn't Exist"
-        echo #formating new line
-        #Display menu to user
-        askMenu
+        msg="Database Doesn't Exist"
     fi
-done
+    echo -e "\n$msg\n"
+}
+#dropDB
