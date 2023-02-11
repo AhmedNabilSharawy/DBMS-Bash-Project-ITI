@@ -2,6 +2,7 @@
 
 : '
 Author : Khaled Gad
+Date : 10/2/2023 06:00 PM
 Description : Select specific data from table 
 '
 
@@ -12,12 +13,12 @@ export LC_COLLATE=C
 dbName="test"  
 dbLocation="../../Databases/$dbName"
 
-tables=$(ls $dbLocation)
-tablesLength=$(ls $dbLocation | wc -l)
 tableName=""
 tableMetaFile=""
 
 chooseTable(){
+    tables=$(ls $dbLocation)
+    tablesLength=$(ls $dbLocation | wc -l)
     # while loop to keep printing menu in the case of error happened 
     while true; do
         PS3="---> "
@@ -40,6 +41,7 @@ chooseTable(){
 chooseColumns(){
     # Get columns names from meta file of table
     tableColumns=($(cut -f1 -d: $dbLocation/.meta-$tableName))
+    marked=("")
     while true; do
         # multi selected menu for columns
         # --------------------- start of menu ------------------ #
@@ -69,7 +71,7 @@ chooseColumns(){
             msg="Invalid option: $choice"
         fi
     done
-
+    selected=("")
     for i in ${!tableColumns[@]}; do
         if [[ "${marked[i]}" ]]
         then
@@ -84,9 +86,9 @@ chooseColumns(){
     
 }
 
-conditions(){
-    return 0
-}
+# conditions(){
+#     return 0
+# }
 
 selectFromTable(){
     # Menu to let user select specific table from list of tables in database
@@ -94,23 +96,38 @@ selectFromTable(){
     chooseTable
     # Menu to let user choose which columns to display
     chooseColumns
-    # Menu to let user select based on conditions
-    
-
-    c="${selected[@]}"
-    awk -F: -v c="$c" '
-        BEGIN{
-            split(c,a," ")
-        }
+    # Menu to let user select rows based on conditions
+    echo "Set condition to select rows based on it"
+    echo "In which column you want to set condition"
+    while true; do
+        PS3="---> "
+        select column in ${tableColumns[@]}
+        do
+            if [[ $REPLY -gt 0 && $REPLY -le ${#tableColumns[@]} ]]
+            then
+                # get value from user that he want to put condition based on it
+                read -p "Enter value of $column: " value
+                break 2
+            else
+                echo -e "\nInvalid option: out of range\n"
+            fi
+        done
+    done
+    echo
+    awk -F: -v c="${selected[*]}" -v r=$REPLY -v v=$value '
+        BEGIN{ split(c, a, " ") }
         {
-            for(i in a) 
-                printf "%s ", $(a[i]); 
-                printf "\n";
-        }
-        ' $dbLocation/$tableName
-        read
+            if($(r+1) == v){
+                for(i in a) {
+                    printf "%s ",$(a[i]+1);
+                }
+                printf "\n"
+            }
+        }' $dbLocation/$tableName
+    
+    echo ""
 }
-#selectFromTable
+selectFromTable
 
 : '
 1- but tables in menu and select table which i want to select data from 

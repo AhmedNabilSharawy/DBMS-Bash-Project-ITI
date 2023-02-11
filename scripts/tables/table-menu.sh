@@ -47,5 +47,5 @@ while true; do
         esac
         break
     done
-    sleep 1
+    read -p "Press any key to continue..."
 done
