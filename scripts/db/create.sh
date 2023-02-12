@@ -14,46 +14,51 @@ Test Cases covered:
 shopt -s extglob
 export LC_COLLATE=C
 
-# check that Database Directory exists if not will create one
-if [ -d Databases ]; then
-    : # no operation command in shell
-else
-    mkdir Databases
-fi
-# create Database from user
-while [ true ]; do
-echo "Database Name should be Alphabets Only and (_) is optional in the middle"
-read -p "Enter Database Name: " DbName
-# check Duplication of Database
-    # if [[ -d ~/DBMS-Bash-Project-ITI/Databases/"$DbName" && -n $DbName ]]; then
-    if [[ -d ./Databases/"$DbName" && -n $DbName ]]; then
-
-        clear #formating
-
-        echo "$DbName Already Exists"
-        echo #formating new line
-        #Display menu to user
-        askMenu
+createDb(){
+    # check that Database Directory exists if not will create one
+    if [ -d Databases ]; then
+        : # no operation command in shell
     else
-        if [[ $DbName =~ ^[a-zA-Z]+_{0,1}[a-zA-Z]+$ && -n $DbName ]]; then
-            mkdir ./Databases/$DbName
-
-            clear #formating 
-
-            echo "$DbName Created successfully"
-            echo #formating new line
-            
-            #Display menu to user
-            askMenu
-        else
-            clear #formating 
-            echo "Database Name invalid"
-            echo #formating new line
-            #Display menu to user
-            askMenu
-        fi
+        mkdir Databases
     fi
-done
+
+    # create Database from user
+    while [ true ]; do
+        echo "Database Name should be Alphabets Only and (_) is optional in the middle."
+        read -p "Enter Database Name please: " DbName
+
+        # check Duplication of Database
+        if [[ -d ./Databases/"$DbName" && -n $DbName ]]; then
+
+            clear #formating
+
+            echo "$DbName Already Exists"
+            echo #formating new line
+
+            #Display menu to user
+            askMenuWithCont
+        else
+            if [[ $DbName =~ ^[a-zA-Z]+_?[a-zA-Z]+$ && -n $DbName ]]; then
+                mkdir ./Databases/$DbName
+                clear #formating 
+
+                echo "$DbName Created successfully"
+                echo #formating new line
+                
+                #Display menu to user
+                askMenuWithCont
+            else
+                clear #formating 
+                echo "Database Name invalid"
+                echo #formating new line
+
+                #Display menu to user
+                askMenuWithCont
+            fi
+        fi
+    done
+}
+
 
 
 

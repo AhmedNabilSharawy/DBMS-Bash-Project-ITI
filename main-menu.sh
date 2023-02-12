@@ -10,8 +10,8 @@ Test Cases covered:
 # import customMenu function from /scripts/custom-menu.sh script
 source ./scripts/custom-menu.sh
 
-# import getDB function from /scripts/db/get-db.sh script
-source ./scripts/db/get-db.sh
+# import dropDB function from /scripts/db/drop.sh script
+source ./scripts/db/create.sh  
 
 # import dropDB function from /scripts/db/drop.sh script
 source ./scripts/db/drop.sh
@@ -26,64 +26,71 @@ shopt -s extglob
 export LC_COLLATE=C
 
 askMenuWithCont(){
-    PS3="Choose Number From Menu PLease: "
-    select choice in "Continue" "Back to Main Menu" "Exit"
-    do
-        case $REPLY in 
-        1) clear #formating 
-            break;;
-        2) clear #formating 
-            . ./main-menu.sh
-            break ;;
-        3) clear #formating 
-            echo "Good Bye, Have a nice Day!"
-            exit ;;
-        *) echo "You have Entered Wrong Number" ;;
-        esac
+    while true; do
+        PS3="Choose Number From Menu PLease: "
+        select choice in "Continue" "Back to Main Menu" "Exit"
+        do
+            case $REPLY in 
+            1) clear #formating 
+                break 2;;
+            2) clear #formating 
+                . ./main-menu.sh
+                break ;;
+            3) clear #formating 
+                echo "Good Bye, Have a nice Day!"
+                exit ;;
+            *) clear #formating 
+                echo "You have Entered Wrong Number!" 
+                echo #formating new line 
+                continue 2 ;;
+            esac
+        done
     done
 }
 
 askMenuWithoutCont(){
-    select choice in "Back to Main Menu" "Exit"
+    while true; do
+        select choice in "Back to Main Menu" "Exit"
             do
                 case $REPLY in 
-                1) clear #formating 
-                    . ./main-menu.sh
-                    break ;;
-                2) clear #formating 
-                   echo "Good Bye, Have a nice Day!"
-                   exit ;;
-                *) echo "You have Entered Wrong Number" ;;
+                    1) clear #formating 
+                        . ./main-menu.sh
+                        break 2 ;;
+                    2) clear #formating 
+                    echo "Good Bye, Have a nice Day!"
+                    exit ;;
+                    *) clear #formating 
+                    echo "You have Entered Wrong Number!" 
+                    echo #formating new line
+                    continue 2 ;;
                 esac
             done
+    done  
 }
+
 while true; do
     PS3="Choose Number From Menu PLease: "
     select choice in "Create Database" "List Databases" "Connect To Databases" "Drop Database" "Exit"
     do
         case $REPLY in 
-            1) #clear #formating 
-                . ./scripts/db/create.sh
-                break ;;
-            2) 
-                clear
-                listDB
-                ;;
-            3) #clear #formating 
+            1) clear #formating 
+                createDb ;;
+            2) clear
+               listDB ;;
+            3) clear #formating 
                 clear
                 connectDB
                 ;;
-            4)
+            4) clear #formating 
                 clear
                 dropDB
                 ;;
-            5) #clear #formating 
-            echo "Good Bye, Have a nice Day!"
-            exit ;;
+            5) clear #formating 
+               echo "Good Bye, Have a nice Day!"
+               exit ;;
             *) echo "You have Entered Wrong Number"
         esac
-        read -p "press any key to continue... "
-        clear
+        clear #formating 
         break
     done
 done
