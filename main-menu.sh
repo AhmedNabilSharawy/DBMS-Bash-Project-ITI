@@ -35,7 +35,7 @@ askMenuWithCont(){
                 break 2;;
             2) clear #formating 
                 . ./main-menu.sh
-                break ;;
+                break 2;;
             3) clear #formating 
                 echo "Good Bye, Have a nice Day!"
                 exit ;;
@@ -74,17 +74,15 @@ while true; do
     do
         case $REPLY in 
             1) clear #formating 
-                createDb ;;
+               createDb ;;
             2) clear
-               listDB ;;
+                listDB ;;
             3) clear #formating 
-                clear
-                connectDB
-                ;;
+               connectDB;;
+
             4) clear #formating 
-                clear
-                dropDB
-                ;;
+               dropDB;;
+
             5) clear #formating 
                echo "Good Bye, Have a nice Day!"
                exit ;;

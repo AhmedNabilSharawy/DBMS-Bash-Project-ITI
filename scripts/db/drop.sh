@@ -18,7 +18,7 @@ dropDB(){
         local dbs=$(ls ./Databases)
         local dbsCount=$(ls ./Databases | wc -l)
         
-        while true; do
+        while [ true ]; do
             if [[ dbsCount -gt 0 ]]; then
                 PS3="Choose Database you want to Drop please: "
                 select choice in $dbs
@@ -29,7 +29,8 @@ dropDB(){
                         rm -r ./Databases/$choice
                         clear #formating
                         echo "Database $choice removed Successfully "
-                        askMenuWithCont
+                        echo #formating new line
+                        askMenuWithoutCont
                     else
                         clear #formating
                         echo "Invalid Number, please enter number from 1 to $dbsCount:"
