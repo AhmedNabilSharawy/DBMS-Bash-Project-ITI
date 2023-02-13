@@ -21,8 +21,8 @@ repeat(){
     done
 }
 customMenu(){
-    local msg="$1"
-    local lineLength=$((${#msg}+5))
+    local title="$1"
+    local lineLength=$((${#title}+20))
     local justPrint="$2"
     shift
     shift
@@ -35,9 +35,10 @@ customMenu(){
     echo "+"
     
     # start of title line
-    echo -n "| "
-    echo -n "$msg"
-    repeat " " 4
+    echo -n "|"
+    repeat " " 10
+    echo -n "$title"
+    repeat " " 10
     echo "|"
 
     # start of dashed line
@@ -66,7 +67,7 @@ customMenu(){
         # user number datatype to convert any string to 0 by default and ignore it
         typeset -i choice
 
-        read -p "choice : " choice
+        read -p "| choice : " choice
         return $choice
     fi
 }

@@ -40,8 +40,7 @@ chooseTable(){
 
 chooseColumns(){
     # Get columns names from meta file of table
-    tableColumns=($(cut -f1 -d: $dbLocation/.meta-$tableName))
-    marked=("")
+    local marked=("")
     while true; do
         # multi selected menu for columns
         # --------------------- start of menu ------------------ #
@@ -54,7 +53,7 @@ chooseColumns(){
         # print message if it exists
         [[ "$msg" ]] && echo "$msg"
 
-        read -p "---> " choice
+        read -p "choice [press ENTER when finish] : " choice
         # --------------------- end of menu -------------------- #
 
         # break if user enter an Enter key
@@ -71,15 +70,14 @@ chooseColumns(){
             msg="Invalid option: $choice"
         fi
     done
-    selected=("")
     for i in ${!tableColumns[@]}; do
         if [[ "${marked[i]}" ]]
         then
             # save columns name
-            #selected[$i]="${tableColumns[i]}"
+            selectedColumnName[$i]="${tableColumns[i]}"
 
             # save indexes of chosen columns 
-            let selected[$i]=$i+1
+            let selectedColumnIdx[$i]=$i+1
         fi
     done
     #echo "${selected[@]}"
@@ -92,29 +90,42 @@ chooseColumns(){
 
 selectFromTable(){
     # Menu to let user select specific table from list of tables in database
-    echo "Select table that you want to get data from"
-    chooseTable
+    
+    # echo "Select table that you want to get data from"
+    # chooseTable
+
+    local tableName=""
+    local selectedColumnIdx=("")
+    local selectedColumnName=("")
+
+    printf "\n"
+    getTable "Select table that you want to get data from"
+    [ $? -eq 2 ] && return
+
     # Menu to let user choose which columns to display
+    local tableColumns=($(cut -f1 -d: $dbLocation/.meta-$tableName))
     chooseColumns
+    
     # Menu to let user select rows based on conditions
-    echo "Set condition to select rows based on it"
+    echo -e "\nSet condition to select rows based on it"
     echo "In which column you want to set condition"
+
     while true; do
-        PS3="---> "
-        select column in ${tableColumns[@]}
-        do
-            if [[ $REPLY -gt 0 && $REPLY -le ${#tableColumns[@]} ]]
-            then
-                # get value from user that he want to put condition based on it
-                read -p "Enter value of $column: " value
-                break 2
-            else
-                echo -e "\nInvalid option: out of range\n"
-            fi
-        done
+        customMenu "SELECT ${selectedColumnName[*]} FROM $tableName WHERE " 0 "${tableColumns[@]}" 
+        choice=$?
+        if [[ $choice -gt 0 && $choice -le ${#tableColumns[@]} ]]
+        then
+            # get value from user that he want to put condition based on it
+            let choice=$choice-1
+            printf "\n"
+            read -p "${tableColumns[$choice]} = " value
+            break 2
+        else
+            echo -e "\nInvalid option: out of range\n"
+        fi
     done
-    echo
-    awk -F: -v c="${selected[*]}" -v r=$REPLY -v v=$value '
+    printf "\n"
+    awk -F: -v c="${selectedColumnIdx[*]}" -v r=$REPLY -v v=$value '
         BEGIN{ split(c, a, " ") }
         {
             if($(r+1) == v){

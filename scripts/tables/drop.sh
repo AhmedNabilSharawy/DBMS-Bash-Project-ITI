@@ -20,28 +20,12 @@ export LC_COLLATE=C
 tableName=""
 
 dropTable(){
-    echo -e "\nName of the table you want to drop"
-    read -p "---> " tableName
-
-    # Check the name of the table is vaild
-    if [[ $tableName =~ ^[_A-Za-z]([_A-Za-z0-9]{2,31})$ ]]
-    then
-        # Check the existing of the table in Database
-        if [[ -f "$dbLocation/$tableName" ]]
-        then
-            rm $dbLocation/$tableName
-            rm $dbLocation/.meta-$tableName
-            echo -e "\nThe {$tableName} table has been deleted successfully"
-            sleep 3
-        else
-            echo -e "\nThe given table is not exist in {$dbName} database"
-            sleep 2
-            dropTable
-        fi
-    else
-        echo -e "\nError: Invalid table name."
-        sleep 2
-        dropTable
-    fi
+    local tableName=""
+    printf "\n"
+    getTable "Select Table to drop in $dbName Database"
+    [ $? -eq 2 ] && return
+    rm $dbLocation/$tableName
+    rm $dbLocation/.meta-$tableName
+    echo -e "\nThe $tableName table has been deleted successfully."
 }
 # dropTable

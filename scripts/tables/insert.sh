@@ -12,15 +12,22 @@ shopt -s extglob
 export LC_COLLATE=C
 
 insertData(){
-    echo "Select Table that you want to insert in"
-    chooseTable
+    local tableName=""
+    printf "\n"
+    getTable "Select Table that you want to insert data in"
+    [ $? -eq 2 ] && return
 
-    tableColumns=($(cut -f1 -d: $dbLocation/.meta-$tableName))
-    columnsDatatype=($(cut -f2 -d: $dbLocation/.meta-$tableName))
-    [ -s $dbLocation/$tableName ] &&  lastID=$(tail -1 $dbLocation/$tableName | cut -f1 -d:) || lastID=0
+    local tableColumns=($(cut -f1 -d: $dbLocation/.meta-$tableName))
+    local columnsDatatype=($(cut -f2 -d: $dbLocation/.meta-$tableName))
+
+    # get id of the row
+    local lastID=0
+    local ID=0
+    [ -s $dbLocation/$tableName ] &&  lastID=$(tail -1 $dbLocation/$tableName | cut -f1 -d:)
     let ID=$lastID+1
+    local row="$ID"
+
     typeset -i column=0
-    row="$ID"
     while [ $column -lt ${#tableColumns[@]} ]
     do
         echo -e "\nEnter data of column $((($column+1)))"
@@ -29,8 +36,7 @@ insertData(){
             "string")
                 if ! [[ $value =~ [a-zA-Z]+ ]]
                 then 
-                    echo -e "\nValueError: the value can not be only numbers"
-                    sleep 1
+                    echo -e "\nInvalidValue : the value can not be only numbers"
                     continue
                 fi
                 ;;
@@ -38,7 +44,6 @@ insertData(){
                 if ! [[ $value =~ ^[0-9]+$ ]]
                 then
                     echo -e "\nValueError: The value must be only numbers"
-                    sleep 1
                     continue 
                 fi
                 ;;
@@ -48,6 +53,5 @@ insertData(){
     done
     echo $row >> $dbLocation/$tableName
     echo -e "\nThe row was inserted successfully with ID = $ID\n"
-    read -p "Press any key to continue..."
 }
 #insertData
