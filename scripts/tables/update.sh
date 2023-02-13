@@ -37,7 +37,7 @@ updateFromTable(){
                 break 2
             else
                 clear # formating
-                echo "Invalid Number, please enter number from 1 to $updatedLength:"
+                echo "Invalid Number, please enter number from 1 to $(($updatedLength+1)):"
             fi
             break
         done
