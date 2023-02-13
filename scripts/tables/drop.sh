@@ -10,15 +10,6 @@ Test Cases:
 2- enter not existing table name [Done]
 '
 
-shopt -s extglob
-export LC_COLLATE=C
-
-# This vars needed when test file without table-menu
-#dbName="test"  
-#dbLocation="../../Databases/$dbName"
-
-tableName=""
-
 dropTable(){
     local tableName=""
     printf "\n"

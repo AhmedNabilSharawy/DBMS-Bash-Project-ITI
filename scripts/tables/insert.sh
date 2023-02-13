@@ -6,11 +6,6 @@ Date : 8/2/2023 8:40 PM
 Description : Insert data to specific table in database
 '
 
-#source ./select.sh
-
-shopt -s extglob
-export LC_COLLATE=C
-
 insertData(){
     local tableName=""
     printf "\n"
@@ -36,14 +31,14 @@ insertData(){
             "string")
                 if ! [[ $value =~ [a-zA-Z]+ ]]
                 then 
-                    echo -e "\nInvalidValue : the value can not be only numbers"
+                    echo -e "\nInvalid Input : The value must contain alphabetics"
                     continue
                 fi
                 ;;
             "number")
                 if ! [[ $value =~ ^[0-9]+$ ]]
                 then
-                    echo -e "\nValueError: The value must be only numbers"
+                    echo -e "\nInvalid Input : Please enter numbers only"
                     continue 
                 fi
                 ;;
@@ -52,6 +47,6 @@ insertData(){
         column=$column+1
     done
     echo $row >> $dbLocation/$tableName
-    echo -e "\nThe row was inserted successfully with ID = $ID\n"
+    echo -e "\nThe row was inserted successfully with ID = $ID"
 }
 #insertData

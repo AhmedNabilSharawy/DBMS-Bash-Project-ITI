@@ -6,10 +6,6 @@ Date : 11-02-2023
 Description : Update data from table 
 '
 
-
-shopt -s extglob
-export LC_COLLATE=C
-
 updateFromTable(){
 
     # ask user which table to update from
@@ -17,7 +13,7 @@ updateFromTable(){
     local tableName=""
     printf "\n"
     getTable "Select table that you want to Update in: "
-    [ $? -eq 2 ] && return # return if database empty or 
+    [ $? -eq 2 ] && return # return if database empty or want to go back
 
     # get condition used to update from user
     # tail used to eliminate pk from update menu 

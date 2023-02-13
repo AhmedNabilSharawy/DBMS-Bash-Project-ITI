@@ -6,9 +6,6 @@ Date : 08-02-2023
 Description : Delete data from table 
 '
 
-shopt -s extglob
-export LC_COLLATE=C
-
 deleteFromTable(){
     # ask user which table to delete from
 
