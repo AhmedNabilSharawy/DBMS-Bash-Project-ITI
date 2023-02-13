@@ -22,7 +22,6 @@ deleteFromTable(){
     deletedLength=${#deletedColumn[@]}
  
     while true; do
-        clear # formating
         PS3="Select Column you want to delete by Please: "
 
         select choice in "_id" ${deletedColumn[@]} "all table data"
