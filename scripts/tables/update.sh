@@ -36,7 +36,7 @@ updateFromTable(){
                 break 2
             else
                 
-                echo "Invalid Number, please enter number from 1 to $(($updatedLength+1)):"
+                echo "Invalid Number, please enter number from 1 to $updatedLength:"
             fi
             break
         done
@@ -79,7 +79,7 @@ updateFromTable(){
                     echo -e "Your answer saved Successfully \n"
                     break 2
                 else
-                    echo -e "Invalid Number, please enter number from 1 to $updatedLength: \n"
+                    echo -e "Invalid Number, please enter number from 1 to $(($updatedLength+1)): \n"
                 fi
             break
         done

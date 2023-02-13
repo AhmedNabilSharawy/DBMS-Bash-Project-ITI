@@ -33,7 +33,8 @@ deleteFromTable(){
                     break 2
             elif [[ $REPLY -eq $(($deletedLength+2)) ]]
                 then
-                    echo "" > $dbLocation/$tableName
+                    # -n to add the next content in the same line 
+                    echo -n "" > $dbLocation/$tableName
                     echo -e "\nall table $tableName data deleted Successfully \n"
                     return # return to table menu
             else
