@@ -28,12 +28,12 @@ createDb(){
         read -p "Enter Database Name please: " DbName
 
         # check Duplication of Database
+        # -n $DbName checks that input is not empty 
         if [[ -d ./Databases/"$DbName" && -n $DbName ]]; then
 
             clear #formating
 
-            echo "$DbName Already Exists"
-            echo #formating new line
+            echo -e "$DbName Already Exists \n"
 
             #Display menu to user
             askMenuWithCont
@@ -42,15 +42,13 @@ createDb(){
                 mkdir ./Databases/$DbName
                 clear #formating 
 
-                echo "$DbName Created successfully"
-                echo #formating new line
+                echo -e "$DbName Created successfully \n"
                 
                 #Display menu to user
                 askMenuWithCont
             else
                 clear #formating 
-                echo "Database Name invalid"
-                echo #formating new line
+                echo -e "Database Name invalid \n"
 
                 #Display menu to user
                 askMenuWithCont

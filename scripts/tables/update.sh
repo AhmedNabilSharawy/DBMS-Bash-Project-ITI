@@ -27,7 +27,7 @@ updateFromTable(){
     # choose updated column from user
     while true; do
         clear # formating
-        echo -e "Enter Column you want to update in Please \n"
+        PS3="Enter Column you want to update in Please:"
         select choice in ${updatedColumn[@]}
         do
             if [[ $REPLY -ge 1 && $REPLY -le $updatedLength ]];then
@@ -77,10 +77,10 @@ updateFromTable(){
                 then
                     columnNum=$REPLY
                     columnName=$choice
-                    echo -e "\nYour answer saved Successfully "
+                    echo -e "Your answer saved Successfully \n"
                     break 2
                 else
-                    echo -e "\nInvalid Number, please enter number from 1 to $updatedLength: \n"
+                    echo -e "Invalid Number, please enter number from 1 to $updatedLength: \n"
                 fi
             break
         done
