@@ -28,25 +28,23 @@ dropDB(){
                     # Drop Statement
                         rm -r ./Databases/$choice
                         clear #formating
-                        echo "Database $choice removed Successfully "
-                        echo #formating new line
+                        echo -e "Database $choice removed Successfully \n"
                         askMenuWithoutCont
                     else
                         clear #formating
-                        echo "Invalid Number, please enter number from 1 to $dbsCount:"
-                        echo #formating new line
+                        echo -e "Invalid Number, please enter number from 1 to $dbsCount:\n"
+
                         continue 2
                     fi
                 done
             else
-                echo "Databases is empty"
-                echo #formating new line
+                echo -e "Databases is empty \n"
                 askMenuWithoutCont
             fi
         done
     else
-        echo "No Databases created yet!"
-        echo #formating new line
+        echo -e "No Databases created yet! \n"
+
         askMenuWithoutCont
     fi
     

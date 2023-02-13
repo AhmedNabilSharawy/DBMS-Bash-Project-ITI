@@ -29,22 +29,20 @@ connectDB(){
                     then
                     # passing database name to tableMenu function
                         tableMenu $choice
+                        
                     else
                         clear #formating
-                        echo "Invalid Number, please enter number from 1 to $dbsCount:"
-                        echo #formating new line
+                        echo -e "Invalid Number, please enter number from 1 to $dbsCount:\n"
                         continue 2
                     fi
                 done
             else
-                echo "Databases is empty"
-                echo #formating new line
+                echo -e "Databases is empty \n"
                 askMenuWithoutCont
             fi
         done
     else 
-        echo "No Databases created yet!"
-        echo #formating new line
+        echo -e "No Databases created yet! \n"
         askMenuWithoutCont
     fi
 }

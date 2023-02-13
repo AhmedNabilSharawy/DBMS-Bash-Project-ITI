@@ -13,7 +13,7 @@ updateFromTable(){
     local tableName=""
     printf "\n"
     getTable "Select table that you want to Update in: "
-    [ $? -eq 2 ] && return # return if database empty or 
+    [ $? -eq 2 ] && return # return if database empty or want to go back
 
     # get condition used to update from user
     # tail used to eliminate pk from update menu 
@@ -22,8 +22,7 @@ updateFromTable(){
 
     # choose updated column from user
     while true; do
-        clear # formating
-        echo -e "Enter Column you want to update in Please \n"
+        PS3="Enter Column you want to update in Please:"
         select choice in ${updatedColumn[@]}
         do
             if [[ $REPLY -ge 1 && $REPLY -le $updatedLength ]];then
@@ -32,8 +31,8 @@ updateFromTable(){
                 dataType=$(awk -F: -v colName=$choice '{if ($1==colName) print $2}' $dbLocation/.meta-$tableName)
                 break 2
             else
-                clear # formating
-                echo "Invalid Number, please enter number from 1 to $updatedLength:"
+                
+                echo "Invalid Number, please enter number from 1 to $(($updatedLength+1)):"
             fi
             break
         done
@@ -41,12 +40,12 @@ updateFromTable(){
 
     # take updated value from user and validate it matches datatype
     while true; do
-        clear # formating
+
         read -p "Enter new value in $choice: " newValue
         echo #formating new line
         if [[ $dataType == string ]];then
             if [[ $newValue =~ [a-zA-Z]+$ ]]; then
-                clear # formating
+                
                 echo -e "\nYour answer saved Successfully "
                 break
             else
@@ -73,10 +72,10 @@ updateFromTable(){
                 then
                     columnNum=$REPLY
                     columnName=$choice
-                    echo -e "\nYour answer saved Successfully "
+                    echo -e "Your answer saved Successfully \n"
                     break 2
                 else
-                    echo -e "\nInvalid Number, please enter number from 1 to $updatedLength: \n"
+                    echo -e "Invalid Number, please enter number from 1 to $updatedLength: \n"
                 fi
             break
         done

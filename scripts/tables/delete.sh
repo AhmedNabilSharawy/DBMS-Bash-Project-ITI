@@ -19,9 +19,8 @@ deleteFromTable(){
     deletedLength=${#deletedColumn[@]}
  
     while true; do
-        clear # formating
-        echo "Select Column you want to delete by Please"
-        echo #formating new line
+        PS3="Select Column you want to delete by Please: "
+
         select choice in "_id" ${deletedColumn[@]} "all table data"
         do
             if [[ $REPLY -ge 1 && $REPLY -le $(($deletedLength+1)) ]]
@@ -32,11 +31,11 @@ deleteFromTable(){
             elif [[ $REPLY -eq $(($deletedLength+2)) ]]
                 then
                     echo "" > $dbLocation/$tableName
-                    echo "all table $tableName data deleted Successfully"
-                else
-                    echo "Invalid Number, please enter number from 1 to $(($deletedLength+2)):"
-                    echo #formating new line
-                fi
+                    echo -e "\nall table $tableName data deleted Successfully \n"
+                    return # return to table menu
+            else
+                echo -e "\nInvalid Number, please enter number from 1 to $(($deletedLength+2)):\n"
+            fi
         done
     done
 

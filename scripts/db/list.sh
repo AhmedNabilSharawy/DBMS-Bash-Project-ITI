@@ -2,7 +2,7 @@
 : '
 Author : Ahmed Nabil
 Date : 04-02-2023
-Description: Display Database based on user input
+Description: Display Databases 
 
 Test Cases covered:
 1- Check Database is empty or not.
@@ -12,8 +12,8 @@ shopt -s extglob
 export LC_COLLATE=C
 
 listDB(){
-    if [[ -d ./Databases ]];then       # -n $DbName checks that input is not empty 
-        if [[ "$(ls ./Databases)" ]]; then
+    if [[ -d ./Databases ]];then       
+        if [[ $(ls ./Databases) ]]; then
         
             clear #formating
 
@@ -24,14 +24,12 @@ listDB(){
             askMenuWithoutCont
         else
             clear #formating 
-            echo "Database is empty"
-            echo #formating new line
+            echo -e "Database is empty \n"
             #Display menu to user
             askMenuWithoutCont
         fi
     else
-        echo "No Databases created yet!"
-        echo #formating new line
+        echo -e "No Databases created yet! \n"
         askMenuWithoutCont
     fi
 }

@@ -36,7 +36,7 @@ source ./scripts/tables/get-table.sh
 tableMenu(){
     local dbName=$1
     local dbLocation="Databases/$dbName"
-    tableMenuOptions=( "List Tables" "Create Table" "Drop Table" "Select from Table" "Insert into Table" "Update Table" "Delete from Table" "Back to Main Menu" "Exit" )
+    tableMenuOptions=( "List Tables" "Create Table" "Drop Table" "Select from Table" "Insert into Table" "Update Table" "Delete from Table" "Back to Connect Menu" "Exit" )
     while true; do
         clear
         customMenu "Connected to $dbName DB" 0 "${tableMenuOptions[@]}"
