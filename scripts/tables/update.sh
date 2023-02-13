@@ -6,10 +6,6 @@ Date : 11-02-2023
 Description : Update data from table 
 '
 
-
-shopt -s extglob
-export LC_COLLATE=C
-
 updateFromTable(){
 
     # ask user which table to update from

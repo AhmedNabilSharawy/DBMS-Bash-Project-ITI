@@ -49,7 +49,7 @@ tableMenu(){
             5) insertData ;; #Done
             6) updateFromTable ;;
             7) deleteFromTable ;;
-            8) break ;;
+            8) break;;
             9) exit 0 ;;
             *) echo -e "\nError: The value must be between (1, ${#tableMenuOptions[*]})\n";
         esac

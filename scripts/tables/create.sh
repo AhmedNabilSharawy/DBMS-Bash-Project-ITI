@@ -14,9 +14,6 @@ Test Cases:
 6- enter invalid data and make sure that table file created if all input is valid [Done]
 '
 
-shopt -s extglob
-export LC_COLLATE=C
-
 getTableinfo(){
     local columnsNo=""
     local columnDataType=""
@@ -27,7 +24,7 @@ getTableinfo(){
     if [[ $columnsNo =~ ^([1-9]|10)$ ]]
     then
         local i=1
-        for(( ; i <= $columnsNo; i++)); do
+        while [[ i -le $columnsNo ]]; do
             printf "\n"
             read -p "Enter column $i Name : " columnName
             printf "\n"
@@ -49,6 +46,7 @@ getTableinfo(){
             # save meta data of each column in array at the following format
             # Name : datatype
             meta[$i]="$columnName:$columnDataType"
+            let i=$i+1
         done
         # create the table file and meta file or it
         touch $dbLocation/$tableName
