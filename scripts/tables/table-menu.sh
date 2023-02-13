@@ -47,8 +47,8 @@ tableMenu(){
             3) dropTable ;; #Done
             4) selectFromTable ;; #Done
             5) insertData ;; #Done
-            6) updateFromTable; break;;
-            7) deleteFromTable; break;;
+            6) updateFromTable ;;
+            7) deleteFromTable ;;
             8) break ;;
             9) exit 0 ;;
             *) echo -e "\nError: The value must be between (1, ${#tableMenuOptions[*]})\n";

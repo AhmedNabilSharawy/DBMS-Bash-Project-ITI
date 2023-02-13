@@ -7,6 +7,7 @@ Description : get database from a menu and validate the choice
 '
 
 getTable(){
+    
     local tables=($(ls $dbLocation))
     local tablesLength=${#tables[@]}
     local title=$1

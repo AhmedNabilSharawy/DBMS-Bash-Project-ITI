@@ -26,11 +26,11 @@ customMenu(){
     local justPrint="$2"
     shift
     shift
-    local arr=("$@")
+    local arr=("$@") # store all remaining parameters in array
     local arrLength=${#arr[*]}
 
     # start of dashed line
-    echo -n "+"
+    echo -n "+" # -n keep printing in the same line
     repeat "-" $lineLength
     echo "+"
     

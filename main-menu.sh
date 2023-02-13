@@ -22,6 +22,7 @@ source ./scripts/db/list.sh
 # import connectDB function from /scripts/db/connect.sh script
 source ./scripts/db/connect.sh 
 
+
 shopt -s extglob
 export LC_COLLATE=C
 

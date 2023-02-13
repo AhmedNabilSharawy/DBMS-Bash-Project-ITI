@@ -5,42 +5,41 @@ Author : Ahmed Nabil
 Date : 08-02-2023
 Description : Delete data from table 
 '
-#source ./select.sh # shall be removed from here
-
-dbName="test"
-dbLocation="../../Databases/$dbName"
 
 shopt -s extglob
 export LC_COLLATE=C
 
 deleteFromTable(){
     # ask user which table to delete from
-    chooseTable
 
-    # get condition used to delete from user
+    local tableName=""
+    printf "\n"
+    getTable "Select table that you want to Update in: "
+    [ $? -eq 2 ] && return # return if database empty or 
+    
+        # get condition used to delete from user
     deletedColumn=($(cut -f1 -d: $dbLocation/.meta-$tableName))
     deletedLength=${#deletedColumn[@]}
-
+ 
     while true; do
-        select choice in ${deletedColumn[@]} "all table data"
+        clear # formating
+        echo "Select Column you want to delete by Please"
+        echo #formating new line
+        select choice in "_id" ${deletedColumn[@]} "all table data"
         do
-            if [[ $REPLY -ge 1 && $REPLY -le $tablesLength ]]
+            if [[ $REPLY -ge 1 && $REPLY -le $(($deletedLength+1)) ]]
                 then
                     columnNum=$REPLY
                     read -p "enter value in $choice you want to delete: " delValue
                     break 2
-            elif [[ $REPLY -eq $(($tablesLength+1)) ]]
+            elif [[ $REPLY -eq $(($deletedLength+2)) ]]
                 then
                     echo "" > $dbLocation/$tableName
-                    clear # formating
                     echo "all table $tableName data deleted Successfully"
-                    break 2
                 else
-                    clear # formating
-                    echo -e "\nError: wrong choice\nTry Again\n"
-                    sleep 2
+                    echo "Invalid Number, please enter number from 1 to $(($deletedLength+2)):"
+                    echo #formating new line
                 fi
-            break
         done
     done
 
@@ -48,12 +47,9 @@ deleteFromTable(){
     deleted=$(awk -F: -v val=$delValue -v colNum=$columnNum '$colNum != val' $dbLocation/$tableName > tmpfile && mv tmpfile $dbLocation/$tableName)
     
     # greater than 0 to go to else stmt
-    if [[ deleted -gt 0 ]]; then
-        clear # formating
+    if [[ $delLineNumber -gt 0 ]]; then
         echo "$delLineNumber Record Deleted Successfully"
     else
-        clear # formating
         echo "No Records Matched"
     fi
 }
-# deleteFromTable

@@ -10,11 +10,11 @@ shopt -s extglob
 export LC_COLLATE=C
 
 # This vars needed when test file without table-menu
-dbName="test"  
-dbLocation="../../Databases/$dbName"
+# dbName="test"  
+# dbLocation="../../Databases/$dbName"
 
-tableName=""
-tableMetaFile=""
+# tableName=""
+# tableMetaFile=""
 
 chooseTable(){
     tables=$(ls $dbLocation)
@@ -138,8 +138,3 @@ selectFromTable(){
     
     echo ""
 }
-
-: '
-1- but tables in menu and select table which i want to select data from 
-2- 
-'
