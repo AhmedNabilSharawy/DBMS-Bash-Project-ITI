@@ -104,12 +104,56 @@ selectFromTable(){
     fi
 
     printf "\n"
-    awk -F: -v c="${selectedColumnIdx[*]}" -v r=$choice -v v=$value '
-        BEGIN{ split(c, a, " ") }
+    # awk -F: -v c="${selectedColumnIdx[*]}" -v r=$choice -v v=$value '
+    #     BEGIN{ split(c, a, " ") }
+    #     {
+    #         if($r == v || v == "n"){
+    #             for(i in a) {
+    #                 printf "%s ",$a[i];
+    #             }
+    #             printf "\n"
+    #         }
+    #     }' $dbLocation/$tableName
+
+    awk -F: -v ci="${selectedColumnIdx[*]}" -v r=$choice -v v=$value -v cn="${selectedColumnName[*]}" '
+        function repeat(c, n){
+            for(j=0;j<n;j++){
+                printf "%s", c
+            }
+        }
+        BEGIN{ 
+            split(ci, a, " ") ;
+            split(cn, an, " ");
+            totalLineLen=1
+            printf "|"
+            for(i in an){
+                repeat(" ", 5)
+                printf "%s", an[i]
+                repeat(" ", 5)
+                printf "|"
+                totalLineLen+=10+length(an[i])+1
+            }
+            printf "\n"
+            printf "|"
+            repeat("-", totalLineLen-2)
+            printf "|\n"
+        }
         {
             if($r == v || v == "n"){
+                printf "|"
                 for(i in a) {
-                    printf "%s ",$a[i];
+                    spaces=((length(an[i])+10)-(length($a[i])))
+                    # printf "total = %d ", spaces
+                    if(spaces%2==0){
+                        repeat(" ", spaces/2)
+                    }
+                    else{
+                        repeat(" ", (spaces/2)-1)
+                    }
+                    spaces=spaces/2
+                    printf "%s",$a[i];
+                    repeat(" ", spaces)
+                    printf "|"
                 }
                 printf "\n"
             }
