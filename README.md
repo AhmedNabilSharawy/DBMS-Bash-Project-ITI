@@ -1,25 +1,13 @@
 # Bash Shell Script Database Management System (DBMS)
 The Project aim to develop DBMS, that will enable users to store and retrieve the data from Hard disk.
 
-<br>
-
----
-
 ## Overview
 
 
 The project is a CLI Menu based app, that will provide to user this 2 Menus to make operations in database or tables
 
-<br>
-
----
-
 ## How to run the project
 - after cloning or downloading the project just run the main manu script `./main-manu.sh`
-
-<br>
-
----
 
 ## Main Menu
 - Create Database
@@ -34,8 +22,6 @@ The project is a CLI Menu based app, that will provide to user this 2 Menus to m
 </p>
 
 <br>
-
----
 
 ## Tables operations menu
 Upon user Connect to Specific Database, there will be new Screen with this Menu:
@@ -56,8 +42,6 @@ Upon user Connect to Specific Database, there will be new Screen with this Menu:
 </p>
 
 <br>
-
----
 
 ## Project Structure
 
@@ -93,10 +77,6 @@ The project contain 2 main directories
         - Delete
     - _**custom-menu**_ script
         - script that accept a title and an array then display the array elements in well formatted table
-
-<br>
-
----
 
 ### Team Members:
 
