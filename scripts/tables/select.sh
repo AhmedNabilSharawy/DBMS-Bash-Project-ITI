@@ -79,34 +79,39 @@ selectFromTable(){
     local tableColumns=("_id" $(cut -f1 -d: $dbLocation/.meta-$tableName))
     chooseColumns
 
-    # Menu to let user select rows based on conditions
-    echo -e "\nSet condition to select rows based on it"
-    echo "In which column you want to set condition"
+    # Ask user to set condition or select all data
+    printf "\n"
+    read -p "Want to set condition to select rows based on it (y/n) (no by default) : " value
 
-    while true; do
-        customMenu "SELECT ${selectedColumnName[*]} FROM $tableName WHERE " 0 "${tableColumns[@]}" 
-        choice=$?
-        if [[ $choice -gt 0 && $choice -le ${#tableColumns[@]} ]]
-        then
-            # get value from user that he want to put condition based on it
-            printf "\n"
-            read -p "${tableColumns[$(($choice-1))]} = " value
-            break
-        else
-            echo -e "\nInvalid option: out of range\n"
-        fi
-    done
+    if [[ $value == "y" ]]; then
+        # Menu to let user select rows based on conditions
+        while true; do
+            customMenu "SELECT ${selectedColumnName[*]} FROM $tableName WHERE " 0 "${tableColumns[@]}" 
+            # the return from the customMenu function [ it should be number from the menu ]
+            choice=$?
+            if [[ $choice -gt 0 && $choice -le ${#tableColumns[@]} ]]
+            then
+                # get value from user that he want to put condition based on it
+                printf "\n"
+                read -p "${tableColumns[$(($choice-1))]} = " value
+                break
+            else
+                echo -e "\nInvalid option: out of range\n"
+            fi
+        done
+    else
+        value="n"
+    fi
+
     printf "\n"
     awk -F: -v c="${selectedColumnIdx[*]}" -v r=$choice -v v=$value '
         BEGIN{ split(c, a, " ") }
         {
-            if($r == v){
+            if($r == v || v == "n"){
                 for(i in a) {
                     printf "%s ",$a[i];
                 }
                 printf "\n"
             }
         }' $dbLocation/$tableName
-    
-    echo ""
 }
