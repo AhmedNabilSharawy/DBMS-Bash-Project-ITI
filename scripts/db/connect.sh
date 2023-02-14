@@ -29,7 +29,7 @@ connectDB(){
                     then
                     # passing database name to tableMenu function
                         tableMenu $choice
-                        
+                        return
                     else
                         clear #formating
                         echo -e "Invalid Number, please enter number from 1 to $dbsCount:\n"

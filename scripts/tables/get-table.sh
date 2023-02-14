@@ -14,7 +14,7 @@ getTable(){
     [[ $tablesLength -eq 0 ]] && echo "$dbName database is empty" && return 2
     while true; do
         printf "\n"
-        customMenu "$title" 0 "${tables[@]}" "Back to Main-Menu" "Exit"
+        customMenu "$title" 0 "${tables[@]}" "Back to Table-Menu" "Exit"
         local choice=$?
         if [[ $choice -gt 0 && $choice -le $tablesLength ]]; then
             let choice=$choice-1
@@ -23,6 +23,7 @@ getTable(){
         elif [[ $choice -eq $(($tablesLength+1)) ]]; then
             return 2
         elif [[ $choice -eq $(($tablesLength+2)) ]]; then
+            echo -e "\nGood Bye, Have a nice Day!\n"
             exit 0
         else
             echo -e "\nInvalid Value: The value must be between (1, $(($tablesLength+2)))"

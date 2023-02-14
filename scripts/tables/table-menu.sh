@@ -36,7 +36,7 @@ source ./scripts/tables/get-table.sh
 tableMenu(){
     local dbName=$1
     local dbLocation="Databases/$dbName"
-    tableMenuOptions=( "List Tables" "Create Table" "Drop Table" "Select from Table" "Insert into Table" "Update Table" "Delete from Table" "Back to Connect Menu" "Exit" )
+    tableMenuOptions=( "List Tables" "Create Table" "Drop Table" "Select from Table" "Insert into Table" "Update Table" "Delete from Table" "Back to Main-Menu" "Exit" )
     while true; do
         clear
         customMenu "Connected to $dbName DB" 0 "${tableMenuOptions[@]}"
@@ -49,8 +49,8 @@ tableMenu(){
             5) insertData ;; #Done
             6) updateFromTable ;;
             7) deleteFromTable ;;
-            8) break;;
-            9) exit 0 ;;
+            8) return;;
+            9) echo -e "\nGood Bye, Have a nice Day!\n"; exit 0 ;;
             *) echo -e "\nError: The value must be between (1, ${#tableMenuOptions[*]})\n";
         esac
         echo ""
