@@ -65,7 +65,7 @@ updateFromTable(){
 
     # filter by column based on user choice
     while true; do
-        echo -e "Enter Column you want to filter by please \n"
+        PS3="Enter Column you want to filter by please"
         select choice in "_id" ${updatedColumn[@]}
         do
             if [[ $REPLY -ge 1 && $REPLY -le $(($updatedLength+1)) ]]
